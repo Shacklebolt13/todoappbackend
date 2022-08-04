@@ -1,9 +1,12 @@
 package app.backend.todo.todoappbackend;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -11,46 +14,45 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 public class TodoItemController {
 
-    @CrossOrigin(origins = "http://localhost:4200")
-    @GetMapping("/getTodos")
-    @ResponseBody
-    public TodoItem[] getTodoItem() {
+    @Autowired
+    private TodoItemService todoItemService;
 
-        // fetch from db
-        TodoItem[] todoA = { new TodoItem(1, "mayank", "test description", false),
-                new TodoItem(2, "title", "desc", false) };
-        return todoA;
+    @CrossOrigin(origins = "http://localhost:4200")
+    @GetMapping("/todos")
+    @ResponseBody
+    public TodoItem[] getTodoItems() {
+        return todoItemService.getTodoItems().toArray(new TodoItem[0]);
     }
 
     @CrossOrigin(origins = "http://localhost:4200")
-    @PostMapping("/addTodo")
+    @PostMapping("/todo")
     @ResponseBody
     public TodoItem addTodoItem(@RequestBody(required = true) TodoItem todoItem) {
         System.out.println("Added TodoItem: " + todoItem);
 
-        // save to db
+        todoItemService.addTodoItem(todoItem);
 
         return todoItem;
     }
 
     @CrossOrigin(origins = "http://localhost:4200")
-    @PostMapping("/updateTodo")
+    @PutMapping("/updateTodo")
     @ResponseBody
     public TodoItem updateTodoItem(@RequestBody(required = true) TodoItem todoItem) {
         System.out.println("Updated TodoItem: " + todoItem);
 
-        // save to db
+        todoItemService.updateTodoItem(todoItem);
 
         return todoItem;
     }
 
     @CrossOrigin(origins = "http://localhost:4200")
-    @PostMapping("/deleteTodo")
+    @DeleteMapping("/deleteTodo")
     @ResponseBody
     public TodoItem deleteTodoItem(@RequestBody(required = true) TodoItem todoItem) {
         System.out.println("Deleted TodoItem: " + todoItem);
 
-        // save to db
+        todoItemService.deleteTodoItem(todoItem);
 
         return todoItem;
     }

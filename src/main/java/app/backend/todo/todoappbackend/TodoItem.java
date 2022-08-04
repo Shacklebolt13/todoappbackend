@@ -1,18 +1,33 @@
 package app.backend.todo.todoappbackend;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table
 public class TodoItem {
 
-    private int id;
+    @Id
+    @Column
+    private int item_id;
+
+    @Column
     private String title;
+
+    @Column
     private String desc;
+
+    @Column
     private boolean done;
 
     public int getId() {
-        return id;
+        return item_id;
     }
 
     public void setId(int id) {
-        this.id = id;
+        this.item_id = id;
     }
 
     public String getTitle() {
@@ -40,7 +55,7 @@ public class TodoItem {
     }
 
     public TodoItem(int id, String title, String desc, boolean done) {
-        this.id = id;
+        this.item_id = id;
         this.title = title;
         this.desc = desc;
         this.done = done;
