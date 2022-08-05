@@ -2,15 +2,17 @@ package app.backend.todo.todoappbackend;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table
 public class TodoItem {
 
     @Id
     @Column
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int item_id;
 
     @Column
@@ -21,6 +23,9 @@ public class TodoItem {
 
     @Column
     private boolean done;
+
+    public TodoItem() {
+    }
 
     public int getId() {
         return item_id;
@@ -59,5 +64,9 @@ public class TodoItem {
         this.title = title;
         this.desc = desc;
         this.done = done;
+    }
+
+    public String toString() {
+        return "TodoItem [id=" + item_id + ", title=" + title + ", desc=" + desc + ", done=" + done + "]";
     }
 }

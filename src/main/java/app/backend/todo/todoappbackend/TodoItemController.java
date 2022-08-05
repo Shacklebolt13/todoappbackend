@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -36,24 +37,31 @@ public class TodoItemController {
     }
 
     @CrossOrigin(origins = "http://localhost:4200")
-    @PutMapping("/updateTodo")
+    @PutMapping("/todo")
     @ResponseBody
     public TodoItem updateTodoItem(@RequestBody(required = true) TodoItem todoItem) {
         System.out.println("Updated TodoItem: " + todoItem);
 
-        todoItemService.updateTodoItem(todoItem);
-
+        try {
+            todoItemService.updateTodoItem(todoItem);
+        } catch (Exception e) {
+            return todoItem;
+        }
         return todoItem;
     }
 
     @CrossOrigin(origins = "http://localhost:4200")
-    @DeleteMapping("/deleteTodo")
+    @DeleteMapping("/todo/{id}")
     @ResponseBody
-    public TodoItem deleteTodoItem(@RequestBody(required = true) TodoItem todoItem) {
-        System.out.println("Deleted TodoItem: " + todoItem);
+    public boolean deleteTodoItem(@PathVariable(required = true) int id) {
+        System.out.println("Deleted TodoItem: " + id);
 
-        todoItemService.deleteTodoItem(todoItem);
+        try {
+            todoItemService.deleteTodoItem(id);
+        } catch (Exception e) {
+            return false;
+        }
 
-        return todoItem;
+        return true;
     }
 }
