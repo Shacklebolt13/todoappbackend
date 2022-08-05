@@ -11,21 +11,19 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 @Controller
 public class TodoItemController {
 
     @Autowired
     private TodoItemService todoItemService;
 
-    @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping("/todos")
     @ResponseBody
     public TodoItem[] getTodoItems() {
         return todoItemService.getTodoItems().toArray(new TodoItem[0]);
     }
 
-    @CrossOrigin(origins = "http://localhost:4200")
     @PostMapping("/todo")
     @ResponseBody
     public TodoItem addTodoItem(@RequestBody(required = true) TodoItem todoItem) {
@@ -36,7 +34,6 @@ public class TodoItemController {
         return todoItem;
     }
 
-    @CrossOrigin(origins = "http://localhost:4200")
     @PutMapping("/todo")
     @ResponseBody
     public TodoItem updateTodoItem(@RequestBody(required = true) TodoItem todoItem) {
@@ -50,7 +47,6 @@ public class TodoItemController {
         return todoItem;
     }
 
-    @CrossOrigin(origins = "http://localhost:4200")
     @DeleteMapping("/todo/{id}")
     @ResponseBody
     public boolean deleteTodoItem(@PathVariable(required = true) int id) {
